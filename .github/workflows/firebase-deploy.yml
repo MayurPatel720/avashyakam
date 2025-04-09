@@ -31,3 +31,5 @@ jobs:
       - name: 📂 Deploy to Firebase
         run: npx firebase deploy --only hosting --project nxavashyakam --token ${{ secrets.FIREBASE_TOKEN }}
         working-directory: .  # go back to root for firebase.json
+
+#cicd is written by Mayur Patel
