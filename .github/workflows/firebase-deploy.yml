@@ -1,0 +1,33 @@
+name: Deploy Frontend to Firebase
+
+on:
+  push:
+    branches: [main]      # Trigger on push to main
+  pull_request:
+    branches: [main]      # Optionally run on PRs targeting main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/frontend   # set working directory
+
+    steps:
+      - name: 📦 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🔧 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Install dependencies
+        run: npm install
+
+      - name: 🛠 Build app
+        run: npm run build
+
+      - name: 📂 Deploy to Firebase
+        run: npx firebase deploy --only hosting --project nxavashyakam --token ${{ secrets.FIREBASE_TOKEN }}
+        working-directory: .  # go back to root for firebase.json
